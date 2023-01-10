@@ -25,7 +25,5 @@ def search(query):
     count_matrix = cv.fit_transform(df['text'])
     cosine_sim = cosine_similarity(cv.transform(ss),count_matrix).mean(axis=0)
     idx = np.argsort(cosine_sim)[::-1]
-    print(df.loc[idx,'url'].values)
-    print(cosine_sim)
-
-    return {'results':df.loc[idx,'url'].values.tolist()}
+    dfa = df.assign(similarity=cosine_sim)
+    return {'results':dfa.loc[idx,['url','similarity']].to_dict('records')}

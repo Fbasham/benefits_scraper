@@ -13,4 +13,4 @@ app.add_middleware(
 @app.get('/{query}')
 def root(query):
     results = search(query)
-    return {'result': results}
+    return results
