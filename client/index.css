@@ -20,20 +20,31 @@ input {
 }
 
 .card {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    text-align: center;
     border: 1px solid black;
     border-radius: 5px;
     box-shadow: 2.5px 2.5px 2.5px black;
     padding: 5px;
 }
 
+.card:hover {
+    background-color: rgb(243, 243, 243);
+    scale: 1.02;
+    transition: 200ms;
+}
+
 .hide {
     display: none;
 }
 
-#results{
+#results {
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 10px;
+    gap: 15px;
 }
 
 #spinner {
@@ -52,5 +63,11 @@ input {
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width:480px) {
+    #results {
+        grid-template-columns: 1fr 1fr;
     }
 }
