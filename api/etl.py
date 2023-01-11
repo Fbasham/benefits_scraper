@@ -5,7 +5,11 @@ from requests_html import AsyncHTMLSession
 
 async def fetch(s,url):
     r = await s.get(url)
-    return {'url':url,'text':r.html.find('main',first=True).text}
+    return {
+        'url':url,
+        'title':r.html.find('h1',first=True).text,
+        'text':r.html.find('main',first=True).text
+    }
 
 async def main():
     s = AsyncHTMLSession()

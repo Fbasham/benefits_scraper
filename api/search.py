@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -24,6 +23,10 @@ def search(query):
     # cv = CountVectorizer()
     count_matrix = cv.fit_transform(df['text'])
     cosine_sim = cosine_similarity(cv.transform(ss),count_matrix).mean(axis=0)
-    idx = np.argsort(cosine_sim)[::-1]
     dfa = df.assign(similarity=cosine_sim)
-    return {'results':dfa.loc[idx,['url','similarity']].to_dict('records')}
+    return {
+        'results': dfa[['title','url','similarity']]
+                      .query('similarity > 0')
+                      .sort_values(by='similarity',ascending=False)
+                      .to_dict('records')
+    }
