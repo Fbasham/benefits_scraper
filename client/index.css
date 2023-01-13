@@ -19,6 +19,10 @@ input {
     padding: 2px;
 }
 
+button {
+    padding: 2px;
+}
+
 .card {
     display: flex;
     flex-direction: column;

@@ -4,11 +4,13 @@ const spinner = document.querySelector("#spinner");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const query = e.target.search.value;
+  const type = e.target["text-similarity"].value ? "text" : "semantic";
+  const query = e.target[`${type}-similarity`].value;
+  if (!query.trim()) return;
   resultsDiv.innerHTML = "";
   try {
     spinner.classList.toggle("hide");
-    let r = await fetch(`http://127.0.0.1:8000/${query}`);
+    let r = await fetch(`http://127.0.0.1:8000/${type}-similarity/${query}`);
     let { results } = await r.json();
     for (let { title, url, similarity } of results) {
       resultsDiv.innerHTML += `<div class='card'>
@@ -20,5 +22,6 @@ form.addEventListener("submit", async (e) => {
     console.error(e);
   } finally {
     spinner.classList.toggle("hide");
+    e.target[`${type}-similarity`].value = "";
   }
 });

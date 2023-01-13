@@ -6,9 +6,11 @@ data_fn = os.path.join(os.path.dirname(__file__),'../../../api/data.txt')
 
 class BenefitsSpider(scrapy.Spider):
     name = 'benefits'
+    allowed_domains = ['canada.ca',]
     custom_settings = {
-        'DEPTH_LIMIT': 3
+        'DEPTH_LIMIT': 5
     }
+
 
     def start_requests(self):
         with open(data_fn,'w') as f:
@@ -24,7 +26,7 @@ class BenefitsSpider(scrapy.Spider):
     def parse(self,response):
         print(response.url)
 
-        if re.search(r'qualify|eligible|eligibility', response.css('h1::text').get(default=''), re.I):
+        if re.search(r'qualify|eligibl|benefit', response.css('h1::text').get(default=''), re.I):
             with open(data_fn,'a') as f:
                 f.write(response.url+'\n')
 
