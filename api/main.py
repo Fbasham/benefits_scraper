@@ -5,6 +5,9 @@ import uvicorn
 import pandas as pd
 from sentence_transformers import SentenceTransformer
 
+import os
+SCRAPED_DATA_PATH = os.path.join(os.path.dirname(__file__),'data/scraped.json')
+
 # import nltk
 # nltk.download('punkt')
 # nltk.download('wordnet')
@@ -18,7 +21,7 @@ from semantic_similarity import semantic_similarity
 
 
 # read in dataframe only once
-df = pd.read_json('scraped.json')
+df = pd.read_json(SCRAPED_DATA_PATH)
 
 
 ## SEMANTIC SIMILARITY

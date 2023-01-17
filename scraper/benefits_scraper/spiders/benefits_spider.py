@@ -2,7 +2,7 @@ import scrapy
 import re
 import os
 
-URLS_OUT_FILE_NAME = os.path.join(os.path.dirname(__file__),'../../../api/urls.txt')
+URLS_OUT_FILE_NAME = os.path.join(os.path.dirname(__file__),'../../../api/data/urls.txt')
 
 class BenefitsSpider(scrapy.Spider):
     name = 'benefits'

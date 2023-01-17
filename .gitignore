@@ -1,3 +1,2 @@
 *.log
-api/urls.txt
-api/scraped.json
+api/data
