@@ -2,18 +2,18 @@ import scrapy
 import re
 import os
 
-data_fn = os.path.join(os.path.dirname(__file__),'../../../api/data.txt')
+URLS_OUT_FILE_NAME = os.path.join(os.path.dirname(__file__),'../../../api/urls.txt')
 
 class BenefitsSpider(scrapy.Spider):
     name = 'benefits'
     allowed_domains = ['canada.ca',]
     custom_settings = {
-        'DEPTH_LIMIT': 5
+        'DEPTH_LIMIT': 3
     }
 
 
     def start_requests(self):
-        with open(data_fn,'w') as f:
+        with open(URLS_OUT_FILE_NAME,'w') as f:
             pass
 
         urls = [
@@ -27,7 +27,7 @@ class BenefitsSpider(scrapy.Spider):
         print(response.url)
 
         if re.search(r'qualify|eligibl|benefit', response.css('h1::text').get(default=''), re.I):
-            with open(data_fn,'a') as f:
+            with open(URLS_OUT_FILE_NAME,'a') as f:
                 f.write(response.url+'\n')
 
         yield from response.follow_all(css='a[href*=benefit][href$=html]', callback=self.parse)
