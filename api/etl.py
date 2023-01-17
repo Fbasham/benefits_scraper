@@ -13,7 +13,7 @@ async def fetch(s,url):
 
 async def main():
     s = AsyncHTMLSession()
-    with open('data.txt','r') as f:
+    with open('urls.txt','r') as f:
         urls = [*map(str.strip,f.readlines())]
     return await asyncio.gather(*(fetch(s,url) for url in urls))
 
