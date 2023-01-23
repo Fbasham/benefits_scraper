@@ -14,10 +14,12 @@ NEWSPIDER_MODULE = 'benefits_scraper.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'benefits_scraper (+http://www.yourdomain.com)'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36 Edg/109.0.1518.61'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+FEED_EXPORT_ENCODING = "utf-8"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

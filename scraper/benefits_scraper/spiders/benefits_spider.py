@@ -24,7 +24,6 @@ class BenefitsSpider(scrapy.Spider):
 
 
     def parse(self,response):
-        print(response.url)
 
         if re.search(r'qualify|eligibl|benefit', response.css('h1::text').get(default=''), re.I):
             with open(URLS_OUT_FILE_NAME,'a') as f:
