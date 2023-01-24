@@ -1,12 +1,20 @@
+import json
+
 def group(fn):
     d = {}
     with open(fn,'r') as f:
-        data = f.readlines()
-        for line in data[1:]:
-            key,value = line.rsplit('/',1)
-            d.setdefault(key,[]).append(value.strip())
+        data = json.load(f)
+        for item in data:
+            key,value = item['url'].rsplit('/',1)
+            d.setdefault(key,[]).append(value)
     
+    for k in d:
+        print(k)
+        print(d[k])
+        print('----------------')
+        print()
+
     return d
 
 
-print(group('out.csv'))
+print(group('out.json'))
