@@ -12,11 +12,12 @@ class ESDCSpider(scrapy.Spider):
             yield scrapy.Request(url,callback=self.parse)
 
     def parse(self, response):
+        ## only check if apply, eligibl(e|ity), qualify in <main> => too many false positives
         # if re.search(r'apply|eligibl|qualify',response.css('main').get(),re.I):
         #     yield {'url': response.url}
 
-        # most viable ?
-        if re.search(r'benefit',response.css('title::text').get(),re.I):
+        # most viable (assumes 'benefit' is in the title) ?
+        if re.search(r'benefit',response.css('title::text').get(),re.I) and any(re.search(r'next|previous',b,re.I) for b in response.css('a::text').getall()):
             yield {'url':response.url}
 
 
