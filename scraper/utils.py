@@ -7,14 +7,14 @@ def group(fn):
         for item in data:
             key,value = item['url'].rsplit('/',1)
             d.setdefault(key,[]).append(value)
-    
-    for k in d:
-        print(k)
-        print(d[k])
-        print('----------------')
-        print()
 
     return d
 
 
-print(group('out.json'))
+# test:
+data = group('out.json')
+for key in data:
+    print(key)
+    print(data[key])
+    print('-'*75)
+    print()

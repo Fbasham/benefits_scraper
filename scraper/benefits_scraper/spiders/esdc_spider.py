@@ -18,8 +18,12 @@ class ESDCSpider(scrapy.Spider):
         # if re.search(r'apply|eligibl|qualify',response.css('main').get(),re.I):
         #     yield {'url': response.url}
 
-        # most viable (assumes 'benefit' is in the title and there's a next or previous button for navigation) ?
-        if possible_benefit or re.search(r'benefit',response.css('title::text').get(),re.I) and any(re.search(r'next|previous',b,re.I) for b in response.css('a::text').getall()):
+        # most viable (assumes 'benefit' is in the title and there's a next or previous button for navigation or meta tags) ?
+        if possible_benefit or re.search(r'benefit',response.css('title::text').get(),re.I) or\
+            any(re.search(r'next|previous',b,re.I) for b in response.css('a::text').getall()) or\
+            any(re.search(r'benefit',m.attrib.get('content',''),re.I) for m in response.css('meta')):
+
+            # flag the page as a probable benefit and yield to the output
             possible_benefit = True
             yield {'url':response.url}
 
