@@ -6,7 +6,7 @@ partial_link_css_selector = lambda *args: f'a{"".join(args)}[href$="html"]:not([
 class ESDCSpider(scrapy.Spider):
     name = 'esdc'
     allowed_domains = ['canada.ca']
-    custom_settings = {'DEPTH_LIMIT':20}
+    custom_settings = {'DEPTH_LIMIT':30}
 
     def start_requests(self):
         urls = ['https://www.canada.ca/en/employment-social-development.html']
@@ -14,12 +14,9 @@ class ESDCSpider(scrapy.Spider):
             yield scrapy.Request(url,callback=self.parse)
 
     def parse(self, response, possible_benefit=False):
-        ## only check if apply, eligibl(e|ity), qualify in <main> => too many false positives
-        # if re.search(r'apply|eligibl|qualify',response.css('main').get(),re.I):
-        #     yield {'url': response.url}
 
-        # most viable (assumes 'benefit' is in the title and there's a next or previous button for navigation or meta tags) ?
         if possible_benefit or re.search(r'benefit',response.css('title::text').get(),re.I) or\
+            any(re.search(r'benefit',h,re.I) for h in response.css('h1::text').getall()) or\
             any(re.search(r'next|previous',b,re.I) for b in response.css('a::text').getall()) or\
             any(re.search(r'benefit',m.attrib.get('content',''),re.I) for m in response.css('meta')):
 
